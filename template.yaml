@@ -91,7 +91,7 @@ spec:
       required:
         - location
       properties:
-        database:
+        location:
           title: Location
           type: string
           description: Name of the Location in HDFS. If not provided, the default value will be assigned during the creation.
