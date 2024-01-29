@@ -1,0 +1,190 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: hdfs-storage-template.1
+  title: HDFS Storage Template
+  description: Create a repository containing the definition of a HDFS Storage Template needed to support a data product
+  mesh:
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Hadoop_logo.svg/320px-Hadoop_logo.svg.png
+  tags:
+    - hdfs
+    - storage
+spec:
+  owner: agilelab
+  type: storage
+
+  parameters:
+    - title: Component basic information
+      required:
+        - name
+        - domain
+        - dataproduct
+        - description
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Required name used for display purposes
+          ui:field: EntityNamePicker
+          default: HDFS Storage
+          ui:options:
+            allowArbitraryValues: true
+        fullyQualifiedName:
+          title: Fully Qualified Name
+          type: string
+          description: Workload fully qualified name
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this component is for
+        domain:
+          title: Domain
+          type: string
+          description: Domain of the Data Product this component belongs to
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds: 
+              - Domain
+        dataproduct:
+          title: Data Product
+          type: string
+          description: Data Product this Workload belongs to
+          ui:field: EntityPicker
+          ui:filter:
+            - fieldName: domain
+              entityPath: spec.domain
+          ui:options:
+            allowArbitraryValues: false
+            allowedKinds: 
+              - System
+        identifier:
+          title: Identifier
+          type: string
+          description: A unique identifier for the entity inside the domain. It will not be editable after creation and is expected to be a string that is sequences of [a-zA-Z] separated by any of [-_]. An example could be 'finance-customer'
+          ui:field: ComponentIdentifierPicker
+          ui:options:
+            allowArbitraryValues: false
+        developmentGroup:
+          title: DevelopmentGroup
+          type: string
+          description: Data Product development group
+          ui:field: EntitySelectionPicker
+          ui:fieldName: dataproduct
+          ui:property: spec.owner
+          ui:options:
+            allowArbitraryValues: false
+        dependsOn:
+          title: Depends on
+          type: array
+          default: []
+          items:
+            type: string
+            ui:field: EntityComponentsPicker
+            ui:fieldName: dataproduct
+            ui:options:
+              allowArbitraryValues: false
+          description: A component could depend on other output ports or storage areas
+
+
+    - title: Provide HDFS deployment information
+      properties:
+        database:
+          title: Location
+          type: string
+          description: Name of the Location in HDFS. If not provided, the default value will be assigned during the creation.
+
+
+    - title: Provide information about Schema
+      properties:
+        schemaColumns:
+          title: Schema Columns
+          type: array
+          items:
+            type: object
+            required: [name, dataType]
+            properties:
+              name:
+                type: string
+                title: Column Name
+              dataType:
+                type: string
+                default: TEXT
+                title: Column Data Type
+                enum:
+                  - TEXT
+                  - NUMBER
+                  - DATE
+                  - BOOLEAN
+              constraint:
+                type: string
+                title: Constraint
+                enum:
+                  - PRIMARY_KEY
+                  - NOT_NULL
+                  - UNIQUE
+                  - NO CONSTRAINT
+              dataLength:
+                type: integer
+                title: Column DataLength
+              precision:
+                type: integer
+                title: Column Precision
+                minimum: 1
+              scale:
+                type: integer
+                title: Column Scale
+                minimum: 0
+
+  steps:
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        targetPath: '.'
+        values:
+          name: '${{ parameters.name }}'
+          fullyQualifiedName: '${{ parameters.fullyQualifiedName }}'
+          description: '${{ parameters.description }}'
+          domain: '${{ parameters.domain }}'
+          dataproduct: '${{ parameters.dataproduct }}'
+          identifier: '${{ parameters.identifier }}'
+          developmentGroup: '${{ parameters.developmentGroup }}'
+          dependsOn: '${{ parameters.dependsOn }}'
+          database: '${{ parameters.database }}'
+          schema: '${{ parameters.schema }}'
+          tableName: '${{ parameters.tableName }}'
+          schemaColumns: '${{ parameters.schemaColumns }}'
+          repoUrl: 'gitlab.com?owner=AgileDMBSandbox%2F${{orgname}}%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
+          useCaseTemplateId: urn:dmb:utm:hdfs-storage-template:0.0.0 # TODO Replace with correct one after it will be released
+          infrastructureTemplateId: urn:dmb:itm:hdfs-storage-provisioner:0 # TODO  Replace with correct one after it will be released
+          rootDirectory: '.'
+          displayName: '${{ parameters.displayName }}'
+          artifact_id: '${{ parameters.name }}'
+          useCaseTemplateVersion: 0.0.0
+
+    - id: publish
+      name: Publish
+      action: witboostMeshComponent:publish:gitlab
+      input:
+        allowedHosts: ['gitlab.com']
+        description: 'This is ${{ parameters.name }}'
+        repoUrl: 'gitlab.com?owner=AgileDMBSandbox%2F${{orgname}}%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
+        rootDirectory: '.'
+        dataproduct: '${{ parameters.dataproduct }}'
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: '${{ steps.publish.output.repoContentsUrl }}'
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: '${{ steps.publish.output.remoteUrl }}'
+      - title: Open in catalog
+        icon: catalog
+        entityRef: '${{ steps.register.output.entityRef }}'

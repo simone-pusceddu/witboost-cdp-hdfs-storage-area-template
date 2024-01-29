@@ -1,0 +1,8 @@
+site_name: "HDFS Storage Template"
+site_description: "Create a HDFS Storage Area using this template"
+
+nav:
+  - Template Usage: index.md
+
+plugins:
+  - techdocs-core

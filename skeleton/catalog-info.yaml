@@ -1,0 +1,44 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.identifier }}
+  description: ${{ values.description | dump }}
+  annotations:
+    gitlab.com/project-slug: ${{ values.destination.owner + "/" + values.destination.repo }}
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - hdfs
+    - storage
+    - cdp-private
+spec:
+  type: storage
+  lifecycle: experimental
+  owner: ${{ values.developmentGroup | dump }}
+  system: ${{ values.dataproduct | dump }}
+  domain: ${{ values.domain | dump }}
+  mesh:
+    name: ${{ values.name | dump }}
+    fullyQualifiedName: ${{ values.fullyQualifiedName | dump }}
+    description: ${{ values.description | dump }}
+    kind: storage
+    version: ${{ values.identifier.split(".")[2] + ".0.0" }}
+    infrastructureTemplateId: ${{ values.infrastructureTemplateId }}
+    useCaseTemplateId: ${{ values.useCaseTemplateId }}
+    dependsOn: {% if values.dependsOn | length > 0 %}{% for i in values.dependsOn %}
+      - ${{ i }}{% endfor %}{% else %}[]{% endif %}
+    platform: Snowflake
+    technology: Snowflake
+    StorageType: Database
+    tags: []
+    specific:
+      database: ${{ values.database | default(values.domain, true) | replace(r/domain:| |-/, "") | upper | dump}}
+      schema: ${{ (values.schema | default(values.dataproduct.split(".")[1], true) | replace(r/ |-/g, "") + "_" + values.identifier.split(".")[2]) | upper | dump }}
+      tables:
+      - tableName: ${{ values.tableName }}
+        schema: {% if values.schemaColumns | length > 0 %}{% for i in values.schemaColumns %}
+          - name: ${{ i.name }}
+            dataType: ${{ i.dataType }}{% if i.constraint is defined %}
+            constraint: ${{ i.constraint }}{% endif %}{% if i.dataLength is defined %}
+            dataLength: ${{ i.dataLength }}{% endif %}{% if i.precision is defined %}
+            precision: ${{ i.precision }}{% endif %}{% if i.scale is defined %}
+            scale: ${{ i.scale }}{% endif %}{% endfor %}{% else %}[]{% endif %}
