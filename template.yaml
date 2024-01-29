@@ -158,9 +158,9 @@ spec:
           schema: '${{ parameters.schema }}'
           tableName: '${{ parameters.tableName }}'
           schemaColumns: '${{ parameters.schemaColumns }}'
-          repoUrl: 'gitlab.com?owner=AgileDMBSandbox%2F${{orgname}}%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
           useCaseTemplateId: urn:dmb:utm:hdfs-storage-template:0.0.0 # TODO Replace with correct one after it will be released
           infrastructureTemplateId: urn:dmb:itm:hdfs-storage-provisioner:0 # TODO  Replace with correct one after it will be released
+          repoUrl: 'gitlab.com?owner=AgileFactory%2FWitboost.Mesh%2Fiac%2Fqa%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
           rootDirectory: '.'
           displayName: '${{ parameters.displayName }}'
           artifact_id: '${{ parameters.name }}'
@@ -172,7 +172,7 @@ spec:
       input:
         allowedHosts: ['gitlab.com']
         description: 'This is ${{ parameters.name }}'
-        repoUrl: 'gitlab.com?owner=AgileDMBSandbox%2F${{orgname}}%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
+        repoUrl: 'gitlab.com?owner=AgileFactory%2FWitboost.Mesh%2Fiac%2Fqa%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
         rootDirectory: '.'
         dataproduct: '${{ parameters.dataproduct }}'
 
