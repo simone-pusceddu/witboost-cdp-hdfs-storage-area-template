@@ -26,12 +26,12 @@ spec:
     useCaseTemplateId: ${{ values.useCaseTemplateId }}
     dependsOn: {% if values.dependsOn | length > 0 %}{% for i in values.dependsOn %}
       - ${{ i }}{% endfor %}{% else %}[]{% endif %}
-    platform: Snowflake
-    technology: Snowflake
-    StorageType: Database
+    platform: CDP
+    technology: HDFS
+    StorageType: Files
     tags: []
     specific:
-      database: ${{ values.database | default(values.domain, true) | replace(r/domain:| |-/, "") | upper | dump}}
+      location: ${{ values.location }}
       schema: ${{ (values.schema | default(values.dataproduct.split(".")[1], true) | replace(r/ |-/g, "") + "_" + values.identifier.split(".")[2]) | upper | dump }}
       tables:
       - tableName: ${{ values.tableName }}

@@ -154,9 +154,7 @@ spec:
           identifier: '${{ parameters.identifier }}'
           developmentGroup: '${{ parameters.developmentGroup }}'
           dependsOn: '${{ parameters.dependsOn }}'
-          database: '${{ parameters.database }}'
           schema: '${{ parameters.schema }}'
-          tableName: '${{ parameters.tableName }}'
           schemaColumns: '${{ parameters.schemaColumns }}'
           useCaseTemplateId: urn:dmb:utm:hdfs-storage-template:0.0.0 # TODO Replace with correct one after it will be released
           infrastructureTemplateId: urn:dmb:itm:hdfs-storage-provisioner:0 # TODO  Replace with correct one after it will be released
