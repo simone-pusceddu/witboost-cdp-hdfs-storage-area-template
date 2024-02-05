@@ -15,9 +15,9 @@ This repository is part of our [Starter Kit](https://github.com/agile-lab-dev/wi
 
 ## Overview
 
-Use this template to create a database, a schema and tables within a Snowflake instance.
+Use this template to create a HDFS path within a CDP Private instance.
 
-We will need to create all tables that will be used for the Data Product, specially the final table the Output Port will use to build the view exposed to the public.
+We will need to create all paths that contain the data that will be used for the Data Product, especially the final table the Output Port will use to build the view exposed to the public.
 
 Refer to the [witboost Starter Kit repository](https://github.com/agile-lab-dev/witboost-starter-kit) for information on the Specific Provisioner that can be used to deploy components created with this template.
 
