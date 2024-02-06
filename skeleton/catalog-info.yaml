@@ -31,14 +31,4 @@ spec:
     StorageType: Files
     tags: []
     specific:
-      location: ${{ values.location }}
-      schema: ${{ (values.schema | default(values.dataproduct.split(".")[1], true) | replace(r/ |-/g, "") + "_" + values.identifier.split(".")[2]) | upper | dump }}
-      tables:
-      - tableName: ${{ values.tableName }}
-        schema: {% if values.schemaColumns | length > 0 %}{% for i in values.schemaColumns %}
-          - name: ${{ i.name }}
-            dataType: ${{ i.dataType }}{% if i.constraint is defined %}
-            constraint: ${{ i.constraint }}{% endif %}{% if i.dataLength is defined %}
-            dataLength: ${{ i.dataLength }}{% endif %}{% if i.precision is defined %}
-            precision: ${{ i.precision }}{% endif %}{% if i.scale is defined %}
-            scale: ${{ i.scale }}{% endif %}{% endfor %}{% else %}[]{% endif %}
+      prefixPath: ${{ values.prefixPath }}

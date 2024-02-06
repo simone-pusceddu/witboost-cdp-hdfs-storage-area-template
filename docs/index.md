@@ -27,41 +27,6 @@ This section includes the basic information that any Component of Witboost must 
 | ***Development Group*** | Might look something like this: *group:datameshplatform* Depends on the Data Product development group |
 
 
-### Provide Information about Schema
-
-The information that needs to be filled here is explained below:
-
-- Column Name: Name of the column inside the table.
-- Column Data Type: Data Type of the column.
-- Constraint: Type of constraint that can be defined on the column.
-- Column Data Length: Length of a string / binary value. For strings, the length is the number of characters.
-- Column Precision: Total number of digits allowed (in case of **NUMERIC** Data Type). Minimum allowed precision is 1.
-- Column Scale: Number of digits allowed to the right of the decimal point (in case of **NUMERIC** Data Type). Minimum allowed scale is 0.
-
-Below are the list of data types that are currently supported and are widely used in our use-case. They are -
-
-- TEXT
-- NUMBER
-- DATE
-- BOOLEAN
-
-If any need arises in the future to expand the current list of data types, we can do so comfortably.
-
-*Example:*
-
-| Name                                    | Data Type | Constraint  | Data Length | Precision | Scale |
-|:----------------------------------------|:----------|:------------|:------------|:----------|:------|
-| _date_                                  | DATE      | PRIMARY_KEY | -           | -         | -     |
-| _location_key_                          | TEXT      | PRIMARY_KEY | -           | -         | -     |
-| _new_persons_vaccinated_                | NUMBER    | -           | -           | -         | -     |
-| _new_persons_fully_vaccinated_          | NUMBER    | -           | -           | -         | -     |
-| _new_vaccine_doses_administered_        | NUMBER    | -           | -           | -         | -     |
-| _cumulative_persons_vaccinated_         | NUMBER    | -           | -           | -         | -     |
-| _cumulative_persons_fully_vaccinated_   | NUMBER    | -           | -           | -         | -     |
-| _cumulative_vaccine_doses_administered_ | NUMBER    | -           | -           | -         | -     |
-
-If multiple columns are marked as `PRIMARY_KEY`, a composite primary key will be created.
-
 After this step, the system will show you the summary of the information provided. You can go back and edit them if you notice any mistake, otherwise you can go ahead and create the Component.
 
 After clicking on **"Create"**, the Component registration will start. If no errors occur, it will go through the 3 phases (Fetching, Publishing and Registering) and it will show you the links to the newly created repository inside GitLab and the new Data Product Component in the Builder Catalog.

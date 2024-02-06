@@ -90,54 +90,12 @@ spec:
 
     - title: Provide HDFS deployment information
       required:
-        - location
+        - prefixPath
       properties:
-        location:
-          title: Location
+        prefixPath:
+          title: Prefix Path
           type: string
-          description: Name of the Location in HDFS. If not provided, the default value will be assigned during the creation.
-
-
-    - title: Provide information about Schema
-      properties:
-        schemaColumns:
-          title: Schema Columns
-          type: array
-          items:
-            type: object
-            required: [name, dataType]
-            properties:
-              name:
-                type: string
-                title: Column Name
-              dataType:
-                type: string
-                default: TEXT
-                title: Column Data Type
-                enum:
-                  - TEXT
-                  - NUMBER
-                  - DATE
-                  - BOOLEAN
-              constraint:
-                type: string
-                title: Constraint
-                enum:
-                  - PRIMARY_KEY
-                  - NOT_NULL
-                  - UNIQUE
-                  - NO CONSTRAINT
-              dataLength:
-                type: integer
-                title: Column DataLength
-              precision:
-                type: integer
-                title: Column Precision
-                minimum: 1
-              scale:
-                type: integer
-                title: Column Scale
-                minimum: 0
+          description: Prefix path of the location in HDFS
 
   steps:
     - id: template
@@ -155,8 +113,7 @@ spec:
           identifier: '${{ parameters.identifier }}'
           developmentGroup: '${{ parameters.developmentGroup }}'
           dependsOn: '${{ parameters.dependsOn }}'
-          schema: '${{ parameters.schema }}'
-          schemaColumns: '${{ parameters.schemaColumns }}'
+          prefixPath: '${{ parameters.prefixPath }}'
           useCaseTemplateId: urn:dmb:utm:cdp-private-storage-hdfs-template:0.0.0
           infrastructureTemplateId: urn:dmb:itm:cdp-private-storage-hdfs-provisioner:0
           repoUrl: 'gitlab.com?owner=AgileFactory%2FWitboost.Mesh%2Fiac%2Fqa%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
