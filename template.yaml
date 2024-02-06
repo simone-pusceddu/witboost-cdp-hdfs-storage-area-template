@@ -96,6 +96,10 @@ spec:
           title: Prefix Path
           type: string
           description: Prefix path of the location in HDFS
+          validation:
+            errorMessage: Invalid prefixPath. Please enter a valid prefixPath starting with a '/' and containing alphanumeric characters separated by '/'. Ensure that it ends with a '/' as well.
+            regularExpression: ^\/(?:[\w-]+\/)*$
+          ui:field: RegexPicker
 
   steps:
     - id: template
