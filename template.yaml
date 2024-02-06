@@ -118,8 +118,8 @@ spec:
           developmentGroup: '${{ parameters.developmentGroup }}'
           dependsOn: '${{ parameters.dependsOn }}'
           prefixPath: '${{ parameters.prefixPath }}'
-          useCaseTemplateId: urn:dmb:utm:cdp-private-storage-hdfs-template:0.0.0
-          infrastructureTemplateId: urn:dmb:itm:cdp-private-storage-hdfs-provisioner:0
+          useCaseTemplateId: urn:dmb:utm:cdp-private-hdfs-storage-template:0.0.0
+          infrastructureTemplateId: urn:dmb:itm:cdp-private-hdfs-storage-provisioner:0
           repoUrl: 'gitlab.com?owner=AgileFactory%2FWitboost.Mesh%2Fiac%2Fqa%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
           rootDirectory: '.'
           displayName: '${{ parameters.displayName }}'
