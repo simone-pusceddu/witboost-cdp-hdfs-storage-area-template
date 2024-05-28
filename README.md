@@ -50,7 +50,7 @@ This project is available under the [Apache License, Version 2.0](https://openso
 
 <p align="center">
     <a href="https://www.agilelab.it">
-        <img src="docs/img/agilelab_logo.jpg" alt="Agile Lab" width=600>
+        <img src="docs/img/agilelab_logo.svg" alt="Agile Lab" width=600>
     </a>
 </p>
 

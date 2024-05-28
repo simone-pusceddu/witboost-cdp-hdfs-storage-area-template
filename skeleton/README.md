@@ -5,16 +5,11 @@
 
 ## Overview
 
-Use this component to create a database, a schema and tables within a Snowflake instance.
-
-We will need to create all tables that will be used for the Data Product, specially the final table the Output Port will use to build the view exposed to the public.
-
-
+Use this component to create a folder hierarchy inside a CDP Private HDFS instance with the required access control. This folder should be used to store data used on the Data Product and consumed by other storages (Impala, Hive) and output ports (HDFS, Impala, Hive).
 
 ### What's a Storage Area?
 
 A Storage Area is what the components of a Data Product use to persist data that is created or used by the various Workloads or served by Output Ports.
-
 
 ## Usage
 

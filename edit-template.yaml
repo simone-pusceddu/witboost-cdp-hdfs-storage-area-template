@@ -1,35 +1,41 @@
-apiVersion: scaffolder.backstage.io/v1beta3
-kind: Template
+apiVersion: witboost.com/v1
+kind: EditTemplate
 metadata:
-  name: hdfs-storage-template.1
-  title: HDFS Storage Template
-  description: Create a repository containing the definition of a HDFS Storage Template needed to support a data product
+  name: edit-hdfs-storage-template.1
+  title: HDFS Storage Edit Template
+  description: Update a repository containing the definition of a HDFS Storage Template needed to support a data product
   mesh:
     icon: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Hadoop_logo.svg/320px-Hadoop_logo.svg.png
   tags:
     - cdp-private
     - hdfs
     - storage
+    - edit
 spec:
   owner: agilelab
-  type: storage
-
+  useCaseTemplateId:
+    - urn:dmb:utm:cdp-private-hdfs-storage-template:0.0.0
   parameters:
-    - title: Component basic information
+    - title: Update Storage Area
+      description: |
+        This wizard will allow you to edit the metadata for a previously created Storage Area.
+        
+        Most metadata is editable but some (like the name, domain, data product etc) are not; their fields will be read-only.
+        
+        Some of the files in the component's repository cannot be updated by this wizard, namely:
+        - **Documentation**: `README.md`, `docs/index.md`, etc
+        - **CI/CD**: `.gitlab-ci-yaml`
+        You need to take care of updating these yourself, as given their nature it's hard to do automatically and they are often edited manually after the component's creation.
+
+    - title: Update component basic information
       required:
-        - name
-        - domain
-        - dataproduct
         - description
       properties:
         name:
           title: Name
           type: string
           description: Required name used for display purposes
-          ui:field: EntityNamePicker
-          default: HDFS Storage
-          ui:options:
-            allowArbitraryValues: true
+          ui:disabled: true
         fullyQualifiedName:
           title: Fully Qualified Name
           type: string
@@ -47,6 +53,7 @@ spec:
             allowArbitraryValues: false
             allowedKinds: 
               - Domain
+          ui:disabled: true
         dataproduct:
           title: Data Product
           type: string
@@ -59,6 +66,7 @@ spec:
             allowArbitraryValues: false
             allowedKinds: 
               - System
+          ui:disabled: true
         identifier:
           title: Identifier
           type: string
@@ -111,7 +119,7 @@ spec:
       name: Fetch Skeleton + Template
       action: fetch:template
       input:
-        url: ./skeleton
+        url: ./edit-skeleton
         targetPath: '.'
         values:
           name: '${{ parameters.name }}'
@@ -123,36 +131,3 @@ spec:
           developmentGroup: '${{ parameters.developmentGroup }}'
           dependsOn: '${{ parameters.dependsOn }}'
           prefixPath: '${{ parameters.prefixPath }}'
-          useCaseTemplateId: urn:dmb:utm:cdp-private-hdfs-storage-template:0.0.0
-          infrastructureTemplateId: urn:dmb:itm:cdp-private-hdfs-storage-provisioner:0
-          repoUrl: &destination 'gitlab.com?owner=AgileDMBSandbox${{orgname}}%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
-          owner: 'AgileDMBSandbox${{orgname}}%2Fmesh.repository/${{ parameters.domain | replace(r/domain:| |-/, "") }}/${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}'
-          repo: '${{ parameters.name.split(" ") | join("") | lower }}'
-          displayName: '${{ parameters.displayName }}'
-          artifact_id: '${{ parameters.name }}'
-          useCaseTemplateVersion: 0.0.0
-
-    - id: publish
-      name: Publish
-      action: witboostMeshComponent:publish:gitlab
-      input:
-        allowedHosts: ['gitlab.com']
-        description: 'This is ${{ parameters.name }}'
-        repoUrl: *destination
-        rootDirectory: '.'
-        dataproduct: '${{ parameters.dataproduct }}'
-
-    - id: register
-      name: Register
-      action: catalog:register
-      input:
-        repoContentsUrl: '${{ steps.publish.output.repoContentsUrl }}'
-        catalogInfoPath: '/catalog-info.yaml'
-
-  output:
-    links:
-      - title: Repository
-        url: '${{ steps.publish.output.remoteUrl }}'
-      - title: Open in catalog
-        icon: catalog
-        entityRef: '${{ steps.register.output.entityRef }}'

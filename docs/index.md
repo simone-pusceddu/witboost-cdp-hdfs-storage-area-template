@@ -26,9 +26,18 @@ This section includes the basic information that any Component of Witboost must 
 | ***Identifier***        | Will look something like this: *healthcare.vaccinationsdp.0.hdfs-vaccinations-storage*                 |
 | ***Development Group*** | Might look something like this: *group:datameshplatform* Depends on the Data Product development group |
 
+### Provide HDFS deployment information
+
+This section includes the necessary information to build the folder hierarchy inside HDFS. It allows the user to write a custom prefix path to a folder where the hierarchy will be created. 
+
+- Prefix Path: Required prefix path defaulting to the root `/` path. It must start and end with `/`. The folder created by this component will be located in: `{{ prefixPath }}/data-products/{{ domainName }}/{{ dataProductName }}/{{ dataProductMajorVersion }}/{{ componentName }}`. All the names are normalized replacing spaces and underscores with hyphens (`-`).
+
+*Example:*
+
+| Field name      | Example value |
+|:----------------|:--------------|
+| **Prefix Path** | /witboost/    |
 
 After this step, the system will show you the summary of the information provided. You can go back and edit them if you notice any mistake, otherwise you can go ahead and create the Component.
 
 After clicking on **"Create"**, the Component registration will start. If no errors occur, it will go through the 3 phases (Fetching, Publishing and Registering) and it will show you the links to the newly created repository inside GitLab and the new Data Product Component in the Builder Catalog.
-
-    > Since the tables and views are created at deployment time and not at running time, remember to **always** add here all the tables you will use in the data transformation stages (SQL or dbt), and in the Output Port.

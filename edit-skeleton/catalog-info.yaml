@@ -5,35 +5,16 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ${{ values.identifier }}
   description: ${{ values.description | dump }}
-  annotations:
-    gitlab.com/project-slug: ${{ values.owner + "/" + values.repo }}
-    backstage.io/techdocs-ref: dir:.
-  tags:
-    - hdfs
-    - storage
-    - cdp-private
 spec:
   type: storage
   lifecycle: experimental
   owner: ${{ values.developmentGroup }}
-  system: ${{ values.dataproduct | dump }}
-  domain: ${{ values.domain | dump }}
   mesh:
-    name: ${{ values.name | dump }}
     fullyQualifiedName: ${{ values.fullyQualifiedName | dump }}
     description: ${{ values.description | dump }}
-    kind: storage
-    version: ${{ dataProductMajorVersion + ".0.0" }}
-    infrastructureTemplateId: ${{ values.infrastructureTemplateId }}
-    useCaseTemplateId: ${{ values.useCaseTemplateId }}
     dependsOn: {% if values.dependsOn | length > 0 %}{% for i in values.dependsOn %}
       - ${{ i }}{% endfor %}{% else %}[]{% endif %}
-    platform: CDP Private
-    technology: HDFS
-    StorageType: Files
-    tags: []
     specific:
       rootFolder: ${{ values.prefixPath }}data-products/${{ domainNameNormalized }}/${{ dataProductNameNormalized }}/${{ dataProductMajorVersion }}
       folder: ${{ componentNameNormalized }}
