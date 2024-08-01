@@ -1,8 +1,12 @@
+Use this template to create an HDFS Storage that creates an HDFS directory, granting access to the data product owners
+
+![HDFS Storage](img/general_diagram.png)
+
 ### Prerequisites
 
 A Data Product should already exist in order to attach the new components to it.
 
-### Component Basic Information
+### Component Metadata
 
 This section includes the basic information that any Component of Witboost must have:
 

@@ -19,6 +19,8 @@ Use this template to create a HDFS path within a CDP Private instance.
 
 We will need to create all paths that contain the data that will be used for the Data Product, especially the final table the Output Port will use to build the view exposed to the public.
 
+![storage_area](docs/img/general_diagram.png)
+
 Refer to the [witboost Starter Kit repository](https://github.com/agile-lab-dev/witboost-starter-kit) for information on the Specific Provisioner that can be used to deploy components created with this template.
 
 ### What's a Template?

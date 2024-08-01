@@ -136,3 +136,6 @@ site
 
 # e2e tests
 cypress/cypress/*
+
+# Drawio backups
+*.bkp
