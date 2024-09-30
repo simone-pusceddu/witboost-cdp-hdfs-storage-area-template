@@ -32,7 +32,7 @@ spec:
       - ${{ i }}{% endfor %}{% else %}[]{% endif %}
     platform: CDP Private
     technology: HDFS
-    StorageType: Files
+    storageType: Files
     tags: []
     specific:
       rootFolder: ${{ values.prefixPath }}data-products/${{ domainNameNormalized }}/${{ dataProductNameNormalized }}/${{ dataProductMajorVersion }}
