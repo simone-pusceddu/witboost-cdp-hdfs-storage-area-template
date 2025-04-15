@@ -137,7 +137,7 @@ spec:
           prefixPath: '${{ parameters.prefixPath }}'
           useCaseTemplateId: urn:dmb:utm:cdp-private-hdfs-storage-template:0.0.0
           infrastructureTemplateId: urn:dmb:itm:cdp-private-hdfs-provisioner:0
-          repoUrl: &destination 'gitlab.com?owner=AgileDMBSandbox${{orgname}}%2Fmesh.repository%2F${{ parameters.domain | replace(r/domain:| |-/, "") }}%2F${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}&repo=${{ parameters.name.split(" ") | join("") | lower }}'
+          repoUrl: &destination 'gitlab.com?owner=simone.pusceddu&repo=${{ parameters.name.split(" ") | join("") | lower }}'
           owner: 'AgileDMBSandbox${{orgname}}%2Fmesh.repository/${{ parameters.domain | replace(r/domain:| |-/, "") }}/${{ parameters.dataproduct.split(".")[1] | replace(r/ |-/g, "") }}'
           repo: '${{ parameters.name.split(" ") | join("") | lower }}'
           displayName: '${{ parameters.displayName }}'
