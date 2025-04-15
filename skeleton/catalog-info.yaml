@@ -1,3 +1,4 @@
+%SKELETON
 {% set domainNameNormalized = values.domain | replace("domain:", "") | replace(r/ |_/g, "-") | lower %}
 {% set dataProductNameNormalized = values.dataproduct.split(".")[1] | replace(r/ |_/g, "-") | lower %}
 {% set componentNameNormalized = values.name | replace(r/ |_/g, "-") | lower %}
